@@ -6,6 +6,7 @@ import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import com.udacity.asteroidradar.Asteroid
+import com.udacity.asteroidradar.Constants
 import com.udacity.asteroidradar.PictureOfDay
 import com.udacity.asteroidradar.api.*
 import com.udacity.asteroidradar.database.AsteroidDatabase
@@ -53,7 +54,7 @@ class AsteroidsRepository(private val databaseAsteroid: AsteroidDatabase) {
         withContext(Dispatchers.IO) {
             try {
                 val response =
-                    Network.asteroidsService.getAsteroids("y6F7nDpCwC8VrgxLWHB2xneUa1EgMwUwl9g1TaVv")
+                    Network.asteroidsService.getAsteroids(Constants.API_KEY)
                         .await()
                 val asteroidsJson = JSONObject(response)
                 val asteroidsList = AsteroidContainer(parseAsteroidsJsonResult(asteroidsJson))
@@ -69,7 +70,7 @@ class AsteroidsRepository(private val databaseAsteroid: AsteroidDatabase) {
         var pictureOfDay: PictureOfDay? = null
         withContext(Dispatchers.IO) {
             pictureOfDay =
-                Network.asteroidsService.getPictureOfTheDay("y6F7nDpCwC8VrgxLWHB2xneUa1EgMwUwl9g1TaVv")
+                Network.asteroidsService.getPictureOfTheDay(Constants.API_KEY)
                     .await()
         }
         return pictureOfDay
